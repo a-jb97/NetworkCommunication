@@ -136,7 +136,7 @@ class BoxOfficeLiteViewController: UIViewController {
     }
     
     @objc func boxOfficeTextFieldDidEndOnExit() {
-        callRequest(url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=3d21e6069bf78850c738916d85c1cbe0&targetDt="+(boxOfficeTextField.text ?? "20250723"))
+        callRequest(url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=3d21e6069bf78850c738916d85c1cbe0&targetDt=" + (boxOfficeTextField.text ?? "20250723"))
     }
 }
 
