@@ -103,9 +103,41 @@ class BoxOfficeLiteViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        callRequest(url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=3d21e6069bf78850c738916d85c1cbe0&targetDt=20250723")
+        
+        boxOfficeTextField.addTarget(self, action: #selector(boxOfficeTextFieldDidEndOnExit), for: .editingDidEndOnExit)
     }
     
+    func callRequest(url: String) {
+        let url = url
+        
+        AF.request(url, method: .get).validate(statusCode: 200..<300).responseDecodable(of: BoxOfficeResult.self) { response in
+            switch response.result {
+            case .success(let value):
+                print("success", value)
+                
+                self.rank1Label.text = "\(value.boxOfficeResult.dailyBoxOfficeList[0].rank)위"
+                self.rank1MovieNameLabel.text = value.boxOfficeResult.dailyBoxOfficeList[0].movieNm
+                self.rank1MovieOpenDateLabel.text = value.boxOfficeResult.dailyBoxOfficeList[0].openDt
+                
+                self.rank2Label.text = "\(value.boxOfficeResult.dailyBoxOfficeList[1].rank)위"
+                self.rank2MovieNameLabel.text = value.boxOfficeResult.dailyBoxOfficeList[1].movieNm
+                self.rank2MovieOpenDateLabel.text = value.boxOfficeResult.dailyBoxOfficeList[1].openDt
+                
+                self.rank3Label.text = "\(value.boxOfficeResult.dailyBoxOfficeList[2].rank)위"
+                self.rank3MovieNameLabel.text = value.boxOfficeResult.dailyBoxOfficeList[2].movieNm
+                self.rank3MovieOpenDateLabel.text = value.boxOfficeResult.dailyBoxOfficeList[2].openDt
+                
+            case .failure(let error):
+                print("fail", error)
+            }
+        }
+    }
     
+    @objc func boxOfficeTextFieldDidEndOnExit() {
+        callRequest(url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=3d21e6069bf78850c738916d85c1cbe0&targetDt="+(boxOfficeTextField.text ?? "20250723"))
+    }
 }
 
 extension BoxOfficeLiteViewController: ViewDesignProtocol {
@@ -127,55 +159,55 @@ extension BoxOfficeLiteViewController: ViewDesignProtocol {
     
     func configureLayout() {
         rank1Label.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(30)
             make.height.equalTo(50)
         }
         
         rank1MovieNameLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(90)
             make.height.equalTo(50)
         }
         
         rank1MovieOpenDateLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(150)
             make.height.equalTo(50)
         }
         
         rank2Label.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(230)
             make.height.equalTo(50)
         }
         
         rank2MovieNameLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(290)
             make.height.equalTo(50)
         }
         
         rank2MovieOpenDateLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(350)
             make.height.equalTo(50)
         }
         
         rank3Label.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(430)
             make.height.equalTo(50)
         }
         
         rank3MovieNameLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(490)
             make.height.equalTo(50)
         }
         
         rank3MovieOpenDateLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(120)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.top.equalTo(550)
             make.height.equalTo(50)
         }
