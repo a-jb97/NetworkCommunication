@@ -8,7 +8,6 @@
 import UIKit
 
 class LottoTextField: UITextField {
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
